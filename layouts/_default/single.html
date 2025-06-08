@@ -1,6 +1,10 @@
 {{ define "main" }}
   {{ partial "title.html" . }}
-  {{ partial "gallery.html" . }}
+  {{ if site.Params.Remote.enabled }}
+    {{ partial "remote-gallery.html" . }}
+  {{ else }}
+    {{ partial "local-gallery.html" . }}
+  {{ end }}
   {{ partial "related.html" . }}
   {{ with .Content }}
     <section class="prose">

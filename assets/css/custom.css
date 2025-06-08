@@ -1,1 +1,11 @@
 /* custom.css */
+.pswp-caption-content-date {
+    font-size: small;
+    color: var(--text-2);
+}
+
+.pswp-caption-content-exif {
+    font-size: x-small;
+    font-style: italic;
+    color: var(--text-2);
+}

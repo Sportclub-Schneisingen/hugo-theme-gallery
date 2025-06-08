@@ -1,0 +1,50 @@
+<section class="gallery">
+  <div id="gallery" style="visibility: hidden; height: 1px; overflow: hidden">
+    {{ $images := slice }}
+    {{ $album := default .Path .Params.album }}
+    {{ range $image := where (site.Data.images) "album" "eq" $album }}
+      {{ $title := "" }}
+      {{ $date := "" }}
+      {{ $images = $images | append (dict
+        "Name" $image.name
+        "Url" $image.url
+        "Color" ($image.meta.color | default "transparent")
+        "Width" $image.meta.width
+        "Height" $image.meta.height
+        )
+      }}
+    {{ end }}
+    {{ range sort $images (.Params.sort_by | default "Name") (.Params.sort_order | default "asc") }}
+      {{ $image := . }}
+      <a class="gallery-item" href="{{ $image.Url }}" data-pswp-src="{{ $image.Url }}" data-pswp-width="{{ $image.Width }}" data-pswp-height="{{ $image.Height }}" data-pswp-target="{{ $image.Url }}" itemscope itemtype="https://schema.org/ImageObject" style="aspect-ratio: {{ $image.Width }} / {{ $image.Height }}">
+        <figure style="background-color: {{ $image.Color }}; aspect-ratio: {{ $image.Width }} / {{ $image.Height }}">
+          <img class="lazyload" width="{{ $image.Width }}" height="{{ $image.Height }}" data-src="{{ $image.Url }}" alt="{{ $image.Name }}" />
+        </figure>
+        {{ if $image.Exif }}
+          <span class="pswp-caption-content">
+            {{ with .Title }}{{ . }}<br />{{ end }}
+            <span class="pswp-caption-content-date">
+              {{ with .Date}}{{ . | time.Format ":date_full" }}<br />{{ end }}
+            </span>
+            <span class="pswp-caption-content-exif">
+              {{ with $image.Exif.Tags }}
+                {{ if .Model }}
+                  {{ .Make }} {{ .Model }}<br />
+                {{ end }}
+            </span>
+            <span class="pswp-caption-content-exif">{{ with .FocalLength }}{{ . }}mm &emsp14;&middot;&emsp14; {{ end }}</span>
+            <span class="pswp-caption-content-exif">{{ with .FNumber }}f/{{ div (math.Round (mul (float .) 10)) 10 }} &emsp14;&middot;&emsp14; {{ end }}</span>
+            <span class="pswp-caption-content-exif">{{ with .ExposureTime }}{{ . }}s &emsp14;&middot;&emsp14; {{ end }}</span>
+            <span class="pswp-caption-content-exif">{{ with .ISO }}ISO {{ . }}{{ end }}</span>
+          {{ end }}
+        {{ end }}
+        <meta itemprop="contentUrl" content="{{ $image.Url }}" />
+        {{ with site.Params.Author }}
+          <span itemprop="creator" itemtype="https://schema.org/Person" itemscope>
+            <meta itemprop="name" content="{{ site.Params.Author.name }}" />
+          </span>
+        {{ end }}
+      </a>
+    {{ end }}
+  </div>
+</section>
