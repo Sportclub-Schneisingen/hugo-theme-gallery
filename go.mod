@@ -1,3 +1,3 @@
-module github.com/nicokaiser/hugo-theme-gallery/v4
+module github.com/Sportclub-Schneisingen/hugo-theme-gallery/v1
 
 go 1.20

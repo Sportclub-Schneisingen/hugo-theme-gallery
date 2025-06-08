@@ -46,7 +46,7 @@ Then add the theme to your `hugo.toml`:
 ### As Git Submodule
 
 ```sh
-git submodule add --depth=1 https://github.com/nicokaiser/hugo-theme-gallery.git themes/gallery
+git submodule add --depth=1 https://github.com/Sportclub-Schneisingen/hugo-theme-gallery.git themes/gallery
 ```
 
 ## Usage
@@ -293,4 +293,5 @@ You can add additional JavaScript in `assets/js/custom.js`.
 
 ## Author
 
-- [Nico Kaiser](https://kaiser.me/)
+- [Janick Lehmann](https://github.com/janicklehmann)
+- Original developer: [Nico Kaiser](https://kaiser.me/)
