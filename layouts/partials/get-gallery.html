@@ -2,10 +2,11 @@
 {{ $images := slice }}
 {{ if site.Params.Remote.enabled }}
   {{ $album := default .Path .Params.album }}
-  {{ $images = where (site.Data.images) "album" "eq" $album }}
+  {{ $images = where (site.Data.images) "album" "like" $album }}
   {{ if gt (len $images) 0 }}
-    {{ $cover := index $images 0 }}
-    {{/*TODO: Possibility to set other covers and find colors*/}}
+    {{/*{{ $cover := index $images 0 }}*/}}
+    {{ $covers := last 1 $images }}
+    {{ $cover := index $covers 0 }}
     {{ $thumbnail := dict
       "Name" $cover.name
       "Url" $cover.url
